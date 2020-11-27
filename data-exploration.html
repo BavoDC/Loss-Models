@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Data exploration | Loss Models : a collection of computer labs in R</title>
+  <meta name="description" content="Tutorials for the course of Loss Models" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Data exploration | Loss Models : a collection of computer labs in R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Tutorials for the course of Loss Models" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Data exploration | Loss Models : a collection of computer labs in R" />
+  
+  <meta name="twitter:description" content="Tutorials for the course of Loss Models" />
+  
+
+<meta name="author" content="Katrien Antonio, Jonas Crevecoeur and Bavo DC Campo" />
+
+
+<meta name="date" content="2020-11-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="simple-parametric-distributions-for-frequency-and-severity-data.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script>
+$(document).ready(function() {
+
+  $chunks = $('.fold');
+
+  $chunks.each(function () {
+
+    // add button to source code chunks
+      $(this).prepend("<div class=\"showopt\">Show Solution</div><br style=\"line-height:22px;\"/>");
+ 
+	$child = $(this).children('div');
+	$child.each(function(){
+		$(this).children('').attr('class', 'folded');
+	});
+	$(this).children('pre').attr('class', 'folded');
+	$(this).children('p').attr('class', 'folded');
+   });
+
+  // hide all chunks when document is loaded
+  $('.folded').css('display', 'none')
+
+  // function to toggle the visibility
+  $('.showopt').click(function() {
+    var label = $(this).html();
+    if (label.indexOf("Show") >= 0) {
+      $(this).html(label.replace("Show", "Hide"));
+    } else {
+      $(this).html(label.replace("Hide", "Show"));
+    }
+    	$child = $(this).siblings('div');
+	$child.each(function(){
+		$(this).children('pre').slideToggle('fast', 'swing');
+	});
+	$(this).siblings('pre').slideToggle('fast', 'swing');
+	$(this).siblings('p').slideToggle('fast', 'swing');
+  });
+});
+</script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Intro</a></li>
+<li class="chapter" data-level="2" data-path="data-exploration.html"><a href="data-exploration.html"><i class="fa fa-check"></i><b>2</b> Data exploration</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-exploration.html"><a href="data-exploration.html#importing-data-in-r"><i class="fa fa-check"></i><b>2.1</b> Importing data in R</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-exploration.html"><a href="data-exploration.html#determining-the-file-path"><i class="fa fa-check"></i><b>2.1.1</b> Determining the file path</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-exploration.html"><a href="data-exploration.html#organizing-your-analysis"><i class="fa fa-check"></i><b>2.1.2</b> Organizing your analysis</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-exploration.html"><a href="data-exploration.html#import-a-.txt-file"><i class="fa fa-check"></i><b>2.1.3</b> Import a .txt file</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-exploration.html"><a href="data-exploration.html#data-exploration-1"><i class="fa fa-check"></i><b>2.2</b> Data exploration</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data-exploration.html"><a href="data-exploration.html#variable-types"><i class="fa fa-check"></i><b>2.2.1</b> variable types</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-exploration.html"><a href="data-exploration.html#factor-variables"><i class="fa fa-check"></i><b>2.2.2</b> Factor variables</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-exploration.html"><a href="data-exploration.html#numeric-variables"><i class="fa fa-check"></i><b>2.2.3</b> Numeric variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html"><i class="fa fa-check"></i><b>3</b> Simple, parametric distributions for frequency and severity data</a><ul>
+<li class="chapter" data-level="3.1" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#the-exponential-distribution"><i class="fa fa-check"></i><b>3.1</b> The exponential distribution</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#simulating-data"><i class="fa fa-check"></i><b>3.1.1</b> Simulating data</a></li>
+<li class="chapter" data-level="3.1.2" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#exploratory-analysis"><i class="fa fa-check"></i><b>3.1.2</b> Exploratory analysis</a></li>
+<li class="chapter" data-level="3.1.3" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#data-visualization-with-ggplot"><i class="fa fa-check"></i><b>3.1.3</b> Data visualization with ggplot</a></li>
+<li class="chapter" data-level="3.1.4" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#maximum-likelihood-estimation-mle"><i class="fa fa-check"></i><b>3.1.4</b> Maximum Likelihood Estimation (MLE)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#discrete-distributions"><i class="fa fa-check"></i><b>3.2</b> Discrete distributions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#simulating-the-data"><i class="fa fa-check"></i><b>3.2.1</b> Simulating the data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#exploratory-analysis-1"><i class="fa fa-check"></i><b>3.2.2</b> Exploratory analysis</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#maximum-likelihood-estimation-mle-1"><i class="fa fa-check"></i><b>3.2.3</b> Maximum Likelihood Estimation (MLE)</a></li>
+<li class="chapter" data-level="3.2.4" data-path="simple-parametric-distributions-for-frequency-and-severity-data.html"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#comparing-fitted-models"><i class="fa fa-check"></i><b>3.2.4</b> Comparing fitted models</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html"><i class="fa fa-check"></i><b>4</b> Putting it all together: case study on modelling claim counts</a><ul>
+<li class="chapter" data-level="4.1" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#read-in-data"><i class="fa fa-check"></i><b>4.1</b> Read in data</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#determining-the-file-path-1"><i class="fa fa-check"></i><b>4.1.1</b> Determining the file path</a></li>
+<li class="chapter" data-level="4.1.2" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#importing-a-.txt-file"><i class="fa fa-check"></i><b>4.1.2</b> Importing a .txt file</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#exploratory-analysis-2"><i class="fa fa-check"></i><b>4.2</b> Exploratory analysis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#summary-statistics-disregarding-exposure"><i class="fa fa-check"></i><b>4.2.1</b> Summary statistics disregarding exposure</a></li>
+<li class="chapter" data-level="4.2.2" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#summary-statistics-taking-into-account-exposure"><i class="fa fa-check"></i><b>4.2.2</b> Summary statistics taking into account exposure</a></li>
+<li class="chapter" data-level="4.2.3" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#empirical-probability-distribution"><i class="fa fa-check"></i><b>4.2.3</b> Empirical probability distribution</a></li>
+<li class="chapter" data-level="4.2.4" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#the-a-b-0-class-of-distributions"><i class="fa fa-check"></i><b>4.2.4</b> The (a, b, 0) class of distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#fitting-count-distributions"><i class="fa fa-check"></i><b>4.3</b> Fitting count distributions</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#poisson"><i class="fa fa-check"></i><b>4.3.1</b> Poisson</a></li>
+<li class="chapter" data-level="4.3.2" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#negative-binomial-1"><i class="fa fa-check"></i><b>4.3.2</b> Negative binomial</a></li>
+<li class="chapter" data-level="4.3.3" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#modified-poisson-distributions"><i class="fa fa-check"></i><b>4.3.3</b> Modified Poisson distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#aic-1"><i class="fa fa-check"></i><b>4.4</b> AIC</a></li>
+<li class="chapter" data-level="4.5" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#replicating-data-sets"><i class="fa fa-check"></i><b>4.5</b> Replicating data sets</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#poisson-1"><i class="fa fa-check"></i><b>4.5.1</b> Poisson</a></li>
+<li class="chapter" data-level="4.5.2" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#nb"><i class="fa fa-check"></i><b>4.5.2</b> NB</a></li>
+<li class="chapter" data-level="4.5.3" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#zip"><i class="fa fa-check"></i><b>4.5.3</b> ZIP</a></li>
+<li class="chapter" data-level="4.5.4" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#hurdle-poisson-1"><i class="fa fa-check"></i><b>4.5.4</b> Hurdle Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#mean-and-variance-of-the-estimated-zip-nb-hurdle-poisson"><i class="fa fa-check"></i><b>4.6</b> Mean and variance of the estimated ZIP, NB, Hurdle Poisson</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#poisson-2"><i class="fa fa-check"></i><b>4.6.1</b> Poisson</a></li>
+<li class="chapter" data-level="4.6.2" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#nb-1"><i class="fa fa-check"></i><b>4.6.2</b> NB</a></li>
+<li class="chapter" data-level="4.6.3" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#zip-1"><i class="fa fa-check"></i><b>4.6.3</b> ZIP</a></li>
+<li class="chapter" data-level="4.6.4" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#hurdle-poisson-2"><i class="fa fa-check"></i><b>4.6.4</b> Hurdle Poisson</a></li>
+<li class="chapter" data-level="4.6.5" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#comparison-with-empirical-mean-and-variance"><i class="fa fa-check"></i><b>4.6.5</b> Comparison with empirical mean and variance</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="putting-it-all-together-case-study-on-modelling-claim-counts.html"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#conclusion"><i class="fa fa-check"></i><b>4.7</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>5</b> Simulation</a><ul>
+<li class="chapter" data-level="5.1" data-path="simulation.html"><a href="simulation.html#severity"><i class="fa fa-check"></i><b>5.1</b> Severity</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="simulation.html"><a href="simulation.html#probability-integral-transform"><i class="fa fa-check"></i><b>5.1.1</b> Probability integral transform</a></li>
+<li class="chapter" data-level="5.1.2" data-path="simulation.html"><a href="simulation.html#visualization"><i class="fa fa-check"></i><b>5.1.2</b> Visualization</a></li>
+<li class="chapter" data-level="5.1.3" data-path="simulation.html"><a href="simulation.html#expected-loss-with-a-deductible"><i class="fa fa-check"></i><b>5.1.3</b> Expected loss with a deductible</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="simulation.html"><a href="simulation.html#aggregate-loss"><i class="fa fa-check"></i><b>5.2</b> Aggregate loss</a></li>
+<li class="chapter" data-level="5.3" data-path="simulation.html"><a href="simulation.html#simulating-future-life-times-of-newborns"><i class="fa fa-check"></i><b>5.3</b> Simulating future life times of newborns</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="simulation.html"><a href="simulation.html#importing-the-data"><i class="fa fa-check"></i><b>5.3.1</b> Importing the data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="simulation.html"><a href="simulation.html#simulate-the-whole-life-time"><i class="fa fa-check"></i><b>5.3.2</b> Simulate the whole life time</a></li>
+<li class="chapter" data-level="5.3.3" data-path="simulation.html"><a href="simulation.html#simulate-the-future-lifetime"><i class="fa fa-check"></i><b>5.3.3</b> Simulate the future lifetime</a></li>
+<li class="chapter" data-level="5.3.4" data-path="simulation.html"><a href="simulation.html#visualize-the-data"><i class="fa fa-check"></i><b>5.3.4</b> Visualize the data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="r-implementation-of-the-assignments-2019-2020.html"><a href="r-implementation-of-the-assignments-2019-2020.html"><i class="fa fa-check"></i><b>6</b> R implementation of the assignments 2019-2020</a><ul>
+<li class="chapter" data-level="6.1" data-path="r-implementation-of-the-assignments-2019-2020.html"><a href="r-implementation-of-the-assignments-2019-2020.html#assignment-1"><i class="fa fa-check"></i><b>6.1</b> Assignment 1</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="r-implementation-of-the-assignments-2019-2020.html"><a href="r-implementation-of-the-assignments-2019-2020.html#exercise-1"><i class="fa fa-check"></i><b>6.1.1</b> Exercise 1</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="r-implementation-of-the-assignments-2019-2020.html"><a href="r-implementation-of-the-assignments-2019-2020.html#assignment-2"><i class="fa fa-check"></i><b>6.2</b> Assignment 2</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="r-implementation-of-the-assignments-2019-2020.html"><a href="r-implementation-of-the-assignments-2019-2020.html#exercise-2"><i class="fa fa-check"></i><b>6.2.1</b> Exercise 2</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Loss Models : a collection of computer labs in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-exploration" class="section level1">
+<h1><span class="header-section-number">2</span> Data exploration</h1>
+<p>In this tutorial you import a dataset and perform an exploratory analysis of the variables. You will visualize the data with ggplot and calculate basic statistics such as the expected value and variance of each variable.</p>
+<div id="importing-data-in-r" class="section level2">
+<h2><span class="header-section-number">2.1</span> Importing data in R</h2>
+<p>The data for this tutorial is stored in the file <a href="data/CPS1985.txt">CPS1985.txt</a>, which is stored in a local subdirectory <code>data</code>. Check out chapter 4 of <a href="https://katrienantonio.github.io/intro-R-book/started-with-data.html#importing-data">Data science in insurance: an R intro</a> for a detailed overview of the R methods for importing data.</p>
+<div id="determining-the-file-path" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Determining the file path</h3>
+<p>Before we can import the data, we have to identify the file location. The file location can be specified by an absolute path or a relative path.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-exploration.html#cb1-1"></a>absolute_path &lt;-<span class="st"> &quot;C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">u0095171</span><span class="ch">\\</span><span class="st">Dropbox</span><span class="ch">\\</span><span class="st">Verzekeringen niet-leven</span><span class="ch">\\</span><span class="st">Bookdown</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">CPS1985.txt&quot;</span></span>
+<span id="cb1-2"><a href="data-exploration.html#cb1-2"></a>relative_path &lt;-<span class="st"> &quot;data</span><span class="ch">\\</span><span class="st">CPS1985.txt&quot;</span></span></code></pre></div>
+<p>Directories in the file path can be separated by a forward slash (<code>/</code>) or a double backward slash (<code>\\</code>).</p>
+<p>Relative paths in R always start from your working directory. The command <code>getwd()</code> returns your current working directory.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-exploration.html#cb2-1"></a><span class="kw">getwd</span>()</span></code></pre></div>
+<pre><code>[1] &quot;C:/Users/u0095171/Dropbox/Research AFI/R software/Bookdown/LossModels&quot;</code></pre>
+<p><code>setwd()</code> specifies the working directory for the current R session. Once set, all files in the working directory can be referenced by relative paths.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-exploration.html#cb4-1"></a><span class="co"># This is the map containing all files for the tutorial</span></span>
+<span id="cb4-2"><a href="data-exploration.html#cb4-2"></a><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">u0095171</span><span class="ch">\\</span><span class="st">Dropbox</span><span class="ch">\\</span><span class="st">Verzekeringen niet-leven</span><span class="ch">\\</span><span class="st">Bookdown</span><span class="ch">\\</span><span class="st">&quot;</span>)</span>
+<span id="cb4-3"><a href="data-exploration.html#cb4-3"></a></span>
+<span id="cb4-4"><a href="data-exploration.html#cb4-4"></a><span class="co"># This is a relative path from the working directory to the file we want to import</span></span>
+<span id="cb4-5"><a href="data-exploration.html#cb4-5"></a>path &lt;-<span class="st"> &quot;data</span><span class="ch">\\</span><span class="st">CPS1985.txt&quot;</span></span></code></pre></div>
+<p>To make sure that the file is located in this directory, we can check it using the command <code>file.exists()</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-exploration.html#cb5-1"></a><span class="kw">file.exists</span>(path)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<p>It is often convenient to set the working directory to the location of the active R file. In Rstudio the following code retrieves the directory of the active document.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-exploration.html#cb7-1"></a>dir &lt;-<span class="st"> </span><span class="kw">dirname</span>(rstudioapi<span class="op">::</span><span class="kw">getActiveDocumentContext</span>()<span class="op">$</span>path)</span>
+<span id="cb7-2"><a href="data-exploration.html#cb7-2"></a><span class="kw">setwd</span>(dir)</span></code></pre></div>
+</div>
+<div id="organizing-your-analysis" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Organizing your analysis</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-exploration.html#cb8-1"></a>CheckDir &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="cf">if</span>(<span class="op">!</span><span class="kw">dir.exists</span>(x)) <span class="kw">dir.create</span>(x)</span>
+<span id="cb8-2"><a href="data-exploration.html#cb8-2"></a>pathDir  =<span class="st"> </span><span class="kw">path.expand</span>(<span class="st">&quot;~/AnalysisLossModels/&quot;</span>)</span>
+<span id="cb8-3"><a href="data-exploration.html#cb8-3"></a>pathData =<span class="st"> </span><span class="kw">paste0</span>(pathDir, <span class="st">&quot;Data/&quot;</span>)</span>
+<span id="cb8-4"><a href="data-exploration.html#cb8-4"></a>pathFigs =<span class="st"> </span><span class="kw">paste0</span>(pathDir, <span class="st">&quot;Figures/&quot;</span>)</span>
+<span id="cb8-5"><a href="data-exploration.html#cb8-5"></a>pathRes  =<span class="st"> </span><span class="kw">paste0</span>(pathDir, <span class="st">&quot;Results/&quot;</span>)</span>
+<span id="cb8-6"><a href="data-exploration.html#cb8-6"></a><span class="kw">sapply</span>(<span class="kw">list</span>(pathDir, pathData, pathFigs, pathRes), CheckDir)</span></code></pre></div>
+<pre><code>[[1]]
+NULL
+
+[[2]]
+NULL
+
+[[3]]
+NULL
+
+[[4]]
+NULL</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-exploration.html#cb10-1"></a><span class="kw">file.copy</span>(path, pathData)</span></code></pre></div>
+<pre><code>[1] FALSE</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-exploration.html#cb12-1"></a><span class="kw">setwd</span>(pathDir)</span>
+<span id="cb12-2"><a href="data-exploration.html#cb12-2"></a><span class="kw">dir</span>()</span></code></pre></div>
+<pre><code>[1] &quot;Data&quot;    &quot;Figures&quot; &quot;Results&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-exploration.html#cb14-1"></a><span class="kw">list.files</span>(<span class="dt">recursive =</span> T)</span></code></pre></div>
+<pre><code>[1] &quot;Data/CPS1985.txt&quot;</code></pre>
+</div>
+<div id="import-a-.txt-file" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Import a .txt file</h3>
+<p><code>read.table()</code> is the most basic import function in R.
+You can specify tons of different arguments in this function (See <code>?read.table</code>).</p>
+<p>We import the dataset <code>CPS1985.txt</code> in a variable <code>CPS</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-exploration.html#cb16-1"></a>CPS &lt;-<span class="st"> </span><span class="kw">read.table</span>(path)</span></code></pre></div>
+<p>After importing a dataset, you should always inspect the data to confirm that the data was imported correctly. <code>head</code> prints the first records of the dataset.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="data-exploration.html#cb17-1"></a><span class="kw">head</span>(CPS)</span></code></pre></div>
+<pre><code>   wage education experience age ethnicity region gender occupation
+1  5.10         8         21  35  hispanic  other female     worker
+2  6.67        12          1  19      cauc  other   male     worker
+3  4.00        12          4  22      cauc  other   male     worker
+4  7.50        12         17  35      cauc  other   male     worker
+5 13.07        13          9  28      cauc  other   male     worker
+6  4.45        10         27  43      cauc  south   male     worker
+         sector union married
+1 manufacturing    no     yes
+2 manufacturing    no      no
+3         other    no      no
+4         other    no     yes
+5         other   yes      no
+6         other    no      no</code></pre>
+<p>Some more data characteristics:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="data-exploration.html#cb19-1"></a><span class="co"># nrow returns the number of rows in the dataset</span></span>
+<span id="cb19-2"><a href="data-exploration.html#cb19-2"></a><span class="kw">nrow</span>(CPS)</span></code></pre></div>
+<pre><code>[1] 533</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="data-exploration.html#cb21-1"></a><span class="co"># colnames returns the variable names in the dataset</span></span>
+<span id="cb21-2"><a href="data-exploration.html#cb21-2"></a><span class="kw">colnames</span>(CPS)</span></code></pre></div>
+<pre><code> [1] &quot;wage&quot;       &quot;education&quot;  &quot;experience&quot; &quot;age&quot;        &quot;ethnicity&quot; 
+ [6] &quot;region&quot;     &quot;gender&quot;     &quot;occupation&quot; &quot;sector&quot;     &quot;union&quot;     
+[11] &quot;married&quot;   </code></pre>
+</div>
+</div>
+<div id="data-exploration-1" class="section level2">
+<h2><span class="header-section-number">2.2</span> Data exploration</h2>
+<p>We continue to explore the variables in the <code>CPS</code> dataset with a focus on <code>wage</code> and <code>sector</code>.</p>
+<div id="variable-types" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> variable types</h3>
+<p>The same data can often be stored in different formats. The function <code>class</code> returns the type of an R object.</p>
+<p>Use the function <code>class</code> to</p>
+<ol style="list-style-type: decimal">
+<li>Determine the class of the dataset CPS;</li>
+<li>Determine the class of the variables <code>wage</code> and <code>sector</code> in the dataset CPS.</li>
+</ol>
+<div class="fold s">
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-exploration.html#cb23-1"></a><span class="co"># @1. </span></span>
+<span id="cb23-2"><a href="data-exploration.html#cb23-2"></a><span class="kw">class</span>(CPS)</span></code></pre></div>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="data-exploration.html#cb25-1"></a><span class="co"># @2.</span></span>
+<span id="cb25-2"><a href="data-exploration.html#cb25-2"></a><span class="kw">class</span>(CPS<span class="op">$</span>wage)</span></code></pre></div>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="data-exploration.html#cb27-1"></a><span class="kw">class</span>(CPS<span class="op">$</span>sector)</span></code></pre></div>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<p>Within the <code>tidyverse</code> the class of all variables in a dataset can be determined using <code>map_chr(&lt;dataset&gt;, class)</code>.</p>
+<p>The function <code>map(&lt;dataset&gt;, &lt;function&gt;)</code> applies <code>&lt;function&gt;</code> to each of the columns of <code>&lt;dataset&gt;</code>. We can use <code>map_chr</code> when the output of <code>&lt;function&gt;</code> is of type <code>character</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="data-exploration.html#cb29-1"></a><span class="kw">require</span>(tidyverse)</span>
+<span id="cb29-2"><a href="data-exploration.html#cb29-2"></a><span class="kw">map_chr</span>(CPS, class)</span></code></pre></div>
+<pre><code>       wage   education  experience         age   ethnicity      region 
+  &quot;numeric&quot;   &quot;integer&quot;   &quot;integer&quot;   &quot;integer&quot; &quot;character&quot; &quot;character&quot; 
+     gender  occupation      sector       union     married 
+&quot;character&quot; &quot;character&quot; &quot;character&quot; &quot;character&quot; &quot;character&quot; </code></pre>
+</div>
+</div>
+<div id="factor-variables" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Factor variables</h3>
+<p><code>factor</code> is the R-datatype for unordened categorical variables.</p>
+<p>Some usefull functions for <code>factor</code>variables are:</p>
+<ul>
+<li><code>levels</code>: shows the possible outcomes.</li>
+<li><code>table</code>: shows the frequency of the possible outcomes.</li>
+</ul>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration.html#cb31-1"></a><span class="kw">levels</span>(CPS<span class="op">$</span>sector)</span></code></pre></div>
+<pre><code>NULL</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-exploration.html#cb33-1"></a><span class="kw">table</span>(CPS<span class="op">$</span>sector)</span></code></pre></div>
+<pre><code>
+ construction manufacturing         other 
+           24            98           411 </code></pre>
+<p>Factors are type-safe, that is you will get a warning when you try to insert a value that is not in <code>levels(&lt;factor variable&gt;)</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-exploration.html#cb35-1"></a>test &lt;-<span class="st"> </span>CPS<span class="op">$</span>sector</span>
+<span id="cb35-2"><a href="data-exploration.html#cb35-2"></a>test[<span class="dv">1</span>] &lt;-<span class="st"> &#39;insurance&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-exploration.html#cb36-1"></a><span class="kw">head</span>(test)</span></code></pre></div>
+<pre><code>[1] &quot;insurance&quot;     &quot;manufacturing&quot; &quot;other&quot;         &quot;other&quot;        
+[5] &quot;other&quot;         &quot;other&quot;        </code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-exploration.html#cb38-1"></a><span class="kw">table</span>(test)</span></code></pre></div>
+<pre><code>test
+ construction     insurance manufacturing         other 
+           24             1            97           411 </code></pre>
+<p><code>NA</code> values are an indication that some calculation went wrong. Notice that the <code>NA</code> value is not shown in the output of <code>table</code>. To obtain the number of <code>NA</code> observation use <code>sum(is.na(&lt;dataset&gt;))</code>.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-exploration.html#cb40-1"></a><span class="kw">sum</span>(<span class="kw">is.na</span>(test))</span></code></pre></div>
+<pre><code>[1] 0</code></pre>
+<p>To insert a new value in a <code>factor</code> variable, we first adapt the set of allowed outcomes.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="data-exploration.html#cb42-1"></a><span class="kw">levels</span>(test) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">levels</span>(test), <span class="st">&#39;insurance&#39;</span>)</span>
+<span id="cb42-2"><a href="data-exploration.html#cb42-2"></a><span class="kw">table</span>(test)</span></code></pre></div>
+<pre><code>test
+ construction     insurance manufacturing         other 
+           24             1            97           411 </code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-exploration.html#cb44-1"></a>test[<span class="dv">1</span>] &lt;-<span class="st"> &#39;insurance&#39;</span></span>
+<span id="cb44-2"><a href="data-exploration.html#cb44-2"></a><span class="kw">table</span>(test)</span></code></pre></div>
+<pre><code>test
+ construction     insurance manufacturing         other 
+           24             1            97           411 </code></pre>
+<p>The following code applies <code>table</code> to all columns of the dataset <code>CPS</code> that are of class factor.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="data-exploration.html#cb46-1"></a><span class="kw">require</span>(tidyverse)</span>
+<span id="cb46-2"><a href="data-exploration.html#cb46-2"></a>CPS <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb46-3"><a href="data-exploration.html#cb46-3"></a><span class="st">  </span><span class="kw">keep</span>(is.factor) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Select all columns of class factor</span></span>
+<span id="cb46-4"><a href="data-exploration.html#cb46-4"></a><span class="st">  </span><span class="kw">map</span>(table) <span class="co"># apply the table function to these columns</span></span></code></pre></div>
+<pre><code>named list()</code></pre>
+<p>In <code>ggplot</code>, <code>geom_bar</code> is used to construct barplots. Check out the <a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">online documentation</a> for examples.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="data-exploration.html#cb48-1"></a><span class="kw">require</span>(ggplot2)</span>
+<span id="cb48-2"><a href="data-exploration.html#cb48-2"></a><span class="kw">ggplot</span>(CPS) <span class="op">+</span></span>
+<span id="cb48-3"><a href="data-exploration.html#cb48-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(sector))</span></code></pre></div>
+<p><img src="_main_files/figure-html/barplot_cps_1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Adding <code>fill = &lt;second factor variable&gt;</code> visualizes the interaction between two factor variables.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="data-exploration.html#cb49-1"></a><span class="kw">ggplot</span>(CPS) <span class="op">+</span></span>
+<span id="cb49-2"><a href="data-exploration.html#cb49-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(sector, <span class="dt">fill =</span> gender))</span></code></pre></div>
+<p><img src="_main_files/figure-html/barplot_cps2-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The default behavior is to stack bars. Adding <code>position = position_dodge()</code> shows bars of different color side-by-side.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="data-exploration.html#cb50-1"></a><span class="kw">ggplot</span>(CPS) <span class="op">+</span></span>
+<span id="cb50-2"><a href="data-exploration.html#cb50-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(sector, <span class="dt">fill =</span> gender),</span>
+<span id="cb50-3"><a href="data-exploration.html#cb50-3"></a>           <span class="dt">position =</span> <span class="kw">position_dodge</span>())</span></code></pre></div>
+<p><img src="_main_files/figure-html/barplot_cps3-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The following code visualizes the distribution of sector by gender.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="data-exploration.html#cb51-1"></a><span class="kw">ggplot</span>(CPS) <span class="op">+</span></span>
+<span id="cb51-2"><a href="data-exploration.html#cb51-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(sector, </span>
+<span id="cb51-3"><a href="data-exploration.html#cb51-3"></a>               <span class="dt">fill =</span> gender,</span>
+<span id="cb51-4"><a href="data-exploration.html#cb51-4"></a>               <span class="dt">y =</span> ..prop..,</span>
+<span id="cb51-5"><a href="data-exploration.html#cb51-5"></a>               <span class="dt">group =</span> gender),</span>
+<span id="cb51-6"><a href="data-exploration.html#cb51-6"></a>           <span class="dt">position =</span> <span class="kw">position_dodge</span>())</span></code></pre></div>
+<p><img src="_main_files/figure-html/barplot_cps4-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="numeric-variables" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Numeric variables</h3>
+<p>The variable <code>wage</code> in the dataset <code>CPS</code> is numeric.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="data-exploration.html#cb52-1"></a><span class="kw">class</span>(CPS<span class="op">$</span>wage)</span></code></pre></div>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<p>A good strategy is to start by visualizing numeric variables in a density plot.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="data-exploration.html#cb54-1"></a><span class="kw">ggplot</span>(CPS) <span class="op">+</span></span>
+<span id="cb54-2"><a href="data-exploration.html#cb54-2"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb54-3"><a href="data-exploration.html#cb54-3"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(wage), <span class="dt">fill =</span> <span class="st">&quot;#99CCFF&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/barplot_cps5-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Adding <code>theme_bw()</code> selects the black and white theme for ggplot figures.</p>
+<p>The density shows that most wages are between 0 and 30, but there is an outlier with a wage of more than 40.</p>
+<p><code>stat_cdf</code> visualizes the empirical cdf.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="data-exploration.html#cb55-1"></a><span class="kw">ggplot</span>(CPS) <span class="op">+</span></span>
+<span id="cb55-2"><a href="data-exploration.html#cb55-2"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb55-3"><a href="data-exploration.html#cb55-3"></a><span class="st">  </span><span class="kw">stat_ecdf</span>(<span class="kw">aes</span>(wage))</span></code></pre></div>
+<p><img src="_main_files/figure-html/cdf_cps-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><code>mean</code> and <code>sd</code> calculate the empirical mean and standard deviation of a numeric variable.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="data-exploration.html#cb56-1"></a>mu &lt;-<span class="st"> </span><span class="kw">mean</span>(CPS<span class="op">$</span>wage)</span>
+<span id="cb56-2"><a href="data-exploration.html#cb56-2"></a>sigma &lt;-<span class="st"> </span><span class="kw">sd</span>(CPS<span class="op">$</span>wage)</span>
+<span id="cb56-3"><a href="data-exploration.html#cb56-3"></a></span>
+<span id="cb56-4"><a href="data-exploration.html#cb56-4"></a><span class="kw">print</span>(<span class="kw">c</span>(mu, sigma))</span></code></pre></div>
+<pre><code>[1] 9.032 5.141</code></pre>
+<p>You can also calulate the mean and standard deviation using the formulas
+<span class="math display">\[\mu = E(X) = \frac{1}{n}\sum_{i=1}^n x\]</span>
+and
+<span class="math display">\[\sigma = \sqrt{E((X-\mu)^2 } = \sqrt{\frac{1}{n}\sum_{i=1}^n (x-\mu)^2}\]</span></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="data-exploration.html#cb58-1"></a>n &lt;-<span class="st"> </span><span class="kw">length</span>(CPS<span class="op">$</span>wage)</span>
+<span id="cb58-2"><a href="data-exploration.html#cb58-2"></a></span>
+<span id="cb58-3"><a href="data-exploration.html#cb58-3"></a><span class="co"># mean</span></span>
+<span id="cb58-4"><a href="data-exploration.html#cb58-4"></a><span class="kw">sum</span>(CPS<span class="op">$</span>wage)<span class="op">/</span>n</span></code></pre></div>
+<pre><code>[1] 9.032</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="data-exploration.html#cb60-1"></a><span class="co"># sd</span></span>
+<span id="cb60-2"><a href="data-exploration.html#cb60-2"></a><span class="kw">sqrt</span>(<span class="kw">sum</span>((CPS<span class="op">$</span>wage <span class="op">-</span><span class="st"> </span>mu)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span>n)</span></code></pre></div>
+<pre><code>[1] 5.136</code></pre>
+<p>There is a slight difference between our outcome and the result of <code>sd(.)</code>, since the latter divides by <code>n-1</code> instead of <code>n</code>.</p>
+<p>We test whether the normal distribution is a good approximation for <code>CPS$wage</code>. For this we visualize the density of <code>CPS$wage</code> and its normal approximation in a single graph.</p>
+<p>In order to visualize the normal approximation we simulate 1000 observations from a normal distribution with the same mean and standard deviation as <code>CPS$wage</code>.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="data-exploration.html#cb62-1"></a>normal_approx &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dt">mean =</span> mu, <span class="dt">sd =</span> sigma)</span></code></pre></div>
+<p><code>rnorm</code> generates observations from a normal distribution.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="data-exploration.html#cb63-1"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb63-2"><a href="data-exploration.html#cb63-2"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb63-3"><a href="data-exploration.html#cb63-3"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(CPS<span class="op">$</span>wage, <span class="dt">fill =</span> <span class="st">&#39;original data&#39;</span>), <span class="dt">alpha =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb63-4"><a href="data-exploration.html#cb63-4"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(normal_approx, <span class="dt">fill =</span> <span class="st">&#39;normal approximation&#39;</span>), <span class="dt">alpha =</span> <span class="fl">.5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/normal_approx_wage-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The shape of these densities is quite different and we conclude that the normal distribution is not a good approximation for <code>CPS$wage</code>. One of the reasons for this poor approximation is that the normal distribution is defined on <span class="math inline">\([-\infty, \infty]\)</span>, whereas wage has to be positive.</p>
+<p>We transform the outcomes of <code>CPS$wage</code> by taking the logarithm.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="data-exploration.html#cb64-1"></a>log_wage =<span class="st"> </span><span class="kw">log</span>(CPS<span class="op">$</span>wage)</span></code></pre></div>
+<p>Exercise:</p>
+<p>Check whether the normal distribution is a good approximation for <code>log(CPS$wage)</code>.</p>
+<div class="fold s">
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="data-exploration.html#cb65-1"></a>mu =<span class="st"> </span><span class="kw">mean</span>(log_wage);</span>
+<span id="cb65-2"><a href="data-exploration.html#cb65-2"></a>sigma =<span class="st"> </span><span class="kw">sd</span>(log_wage);</span>
+<span id="cb65-3"><a href="data-exploration.html#cb65-3"></a></span>
+<span id="cb65-4"><a href="data-exploration.html#cb65-4"></a>normal_approx &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dt">mean =</span> mu, <span class="dt">sd =</span> sigma)</span>
+<span id="cb65-5"><a href="data-exploration.html#cb65-5"></a></span>
+<span id="cb65-6"><a href="data-exploration.html#cb65-6"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb65-7"><a href="data-exploration.html#cb65-7"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb65-8"><a href="data-exploration.html#cb65-8"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="kw">log</span>(CPS<span class="op">$</span>wage), <span class="dt">fill =</span> <span class="st">&#39;log_wage&#39;</span>), <span class="dt">alpha =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb65-9"><a href="data-exploration.html#cb65-9"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(normal_approx, <span class="dt">fill =</span> <span class="st">&#39;normal approximation&#39;</span>), <span class="dt">alpha =</span> <span class="fl">.5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/normal_approx_log_wage-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>The approximation is better, but the normal distribution has fatter tails than the log(wage) distribution.</p>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simple-parametric-distributions-for-frequency-and-severity-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
