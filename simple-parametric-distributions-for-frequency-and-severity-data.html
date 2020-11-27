@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
 <head>
-
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Simple, parametric distributions for frequency and severity data | Loss Models : a collection of computer labs in R</title>
@@ -10,16 +10,16 @@
 
   <meta property="og:title" content="3 Simple, parametric distributions for frequency and severity data | Loss Models : a collection of computer labs in R" />
   <meta property="og:type" content="book" />
-  
-  
+
+
   <meta property="og:description" content="Tutorials for the course of Loss Models" />
-  
+
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="3 Simple, parametric distributions for frequency and severity data | Loss Models : a collection of computer labs in R" />
-  
+
   <meta name="twitter:description" content="Tutorials for the course of Loss Models" />
-  
+
 
 <meta name="author" content="Katrien Antonio, Jonas Crevecoeur and Bavo DC Campo" />
 
@@ -29,8 +29,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
+
+
 <link rel="prev" href="data-exploration.html"/>
 <link rel="next" href="putting-it-all-together-case-study-on-modelling-claim-counts.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
     // add button to source code chunks
       $(this).prepend("<div class=\"showopt\">Show Solution</div><br style=\"line-height:22px;\"/>");
- 
+
 	$child = $(this).children('div');
 	$child.each(function(){
 		$(this).children('').attr('class', 'folded');
@@ -328,7 +328,7 @@ In this tutorial you will simulate data from an exponential distribution with de
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb72-1"></a><span class="co"># @3.</span></span>
 <span id="cb72-2"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb72-2"></a>var95 &lt;-<span class="st"> </span><span class="kw">quantile</span>(sim, <span class="fl">0.95</span>);</span>
 <span id="cb72-3"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb72-3"></a>var95</span></code></pre></div>
-<pre><code> 95% 
+<pre><code> 95%
 14.8 </code></pre>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb74-1"></a>tvar95 &lt;-<span class="st"> </span><span class="kw">mean</span>(sim[sim <span class="op">&gt;</span><span class="st"> </span>var95])</span>
 <span id="cb74-2"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb74-2"></a>tvar95</span></code></pre></div>
@@ -645,7 +645,7 @@ holds for the simulated data.</li>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb105-1"></a>prob &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(sim))</span>
 <span id="cb105-2"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb105-2"></a>prob</span></code></pre></div>
 <pre><code>sim
-     0      1      2      3      4      5      6      8     10 
+     0      1      2      3      4      5      6      8     10
 0.9319 0.0538 0.0104 0.0023 0.0010 0.0002 0.0001 0.0002 0.0001 </code></pre>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb107-1"></a>k &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></span>
 <span id="cb107-2"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb107-2"></a>pk &lt;-<span class="st"> </span>prob[k<span class="op">+</span><span class="dv">1</span>]</span>
@@ -795,7 +795,7 @@ $iterations
 <span id="cb121-3"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb121-3"></a>nb.a &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>])</span>
 <span id="cb121-4"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb121-4"></a></span>
 <span id="cb121-5"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb121-5"></a><span class="kw">c</span>(<span class="dt">mu =</span> nb.mu, <span class="dt">a =</span> nb.a)</span></code></pre></div>
-<pre><code>    mu      a 
+<pre><code>    mu      a
 0.0897 0.1506 </code></pre>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb123-1"></a>nb.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class="op">$</span>minimum</span></code></pre></div>
 </div>
@@ -819,7 +819,7 @@ $iterations
 <span id="cb124-3"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb124-3"></a></span>
 <span id="cb124-4"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb124-4"></a><span class="co"># the nb distribution has the lowest AIC</span></span>
 <span id="cb124-5"><a href="simple-parametric-distributions-for-frequency-and-severity-data.html#cb124-5"></a><span class="kw">print</span>(aic)</span></code></pre></div>
-<pre><code>geom   nb 
+<pre><code>geom   nb
 6200 5955 </code></pre>
 </div>
 </div>
