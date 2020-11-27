@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
 <head>
-
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Putting it all together: case study on modelling claim counts | Loss Models : a collection of computer labs in R</title>
@@ -10,16 +10,16 @@
 
   <meta property="og:title" content="4 Putting it all together: case study on modelling claim counts | Loss Models : a collection of computer labs in R" />
   <meta property="og:type" content="book" />
-  
-  
+
+
   <meta property="og:description" content="Tutorials for the course of Loss Models" />
-  
+
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="4 Putting it all together: case study on modelling claim counts | Loss Models : a collection of computer labs in R" />
-  
+
   <meta name="twitter:description" content="Tutorials for the course of Loss Models" />
-  
+
 
 <meta name="author" content="Katrien Antonio, Jonas Crevecoeur and Bavo DC Campo" />
 
@@ -29,8 +29,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
+
+
 <link rel="prev" href="simple-parametric-distributions-for-frequency-and-severity-data.html"/>
 <link rel="next" href="simulation.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
     // add button to source code chunks
       $(this).prepend("<div class=\"showopt\">Show Solution</div><br style=\"line-height:22px;\"/>");
- 
+
 	$child = $(this).children('div');
 	$child.each(function(){
 		$(this).children('').attr('class', 'folded');
@@ -357,7 +357,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb140-5"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb140-5"></a></span>
 <span id="cb140-6"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb140-6"></a><span class="kw">c</span>(<span class="dt">mean =</span> mu,</span>
 <span id="cb140-7"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb140-7"></a>  <span class="dt">variance =</span> var)</span></code></pre></div>
-<pre><code>    mean variance 
+<pre><code>    mean variance
  0.09848  0.10925 </code></pre>
 </div>
 <div id="summary-statistics-taking-into-account-exposure" class="section level3">
@@ -372,7 +372,7 @@ For more intuition behind these estimators, check out the <a href="http://freako
 <span id="cb142-3"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb142-3"></a></span>
 <span id="cb142-4"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb142-4"></a><span class="kw">c</span>(<span class="dt">mean =</span> mu,</span>
 <span id="cb142-5"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb142-5"></a>  <span class="dt">variance =</span> var)</span></code></pre></div>
-<pre><code>    mean variance 
+<pre><code>    mean variance
   0.1546   0.1675 </code></pre>
 <p>This is the expected number of accidents for a policyholder who is insurerd throughout the whole year, i.e. <span class="math inline">\(d_i = 1\)</span>.</p>
 </div>
@@ -381,7 +381,7 @@ For more intuition behind these estimators, check out the <a href="http://freako
 <p><code>table</code> allows us to easily construct a contingency table of the counts.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb144-1"></a><span class="kw">table</span>(Clm_Count)</span></code></pre></div>
 <pre><code>Clm_Count
-     0      1      2      3      4      5 
+     0      1      2      3      4      5
 145683  12910   1234    107     12      1 </code></pre>
 <p>R can plot this table</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb146-1"></a><span class="kw">plot</span>(<span class="kw">table</span>(Clm_Count))</span></code></pre></div>
@@ -389,7 +389,7 @@ For more intuition behind these estimators, check out the <a href="http://freako
 <p><code>prop.table</code> can be used to obtain the empirical probability distribution</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb147-1"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(Clm_Count))</span></code></pre></div>
 <pre><code>Clm_Count
-        0         1         2         3         4         5 
+        0         1         2         3         4         5
 9.108e-01 8.071e-02 7.715e-03 6.690e-04 7.502e-05 6.252e-06 </code></pre>
 <p>We can create a better barplot using ggplot</p>
 <ul>
@@ -575,8 +575,8 @@ We match the first two moments and set</p>
 <div id="zero-inflated-poisson-zip" class="section level4">
 <h4><span class="header-section-number">4.3.3.1</span> Zero Inflated Poisson (ZIP)</h4>
 <p>The ZIP distribution is a Poisson distribution where the probability of having zero claims is increased by <span class="math inline">\(p\)</span>.</p>
-<p><span class="math display">\[ P(N = k) = 
-\begin{cases} 
+<p><span class="math display">\[ P(N = k) =
+\begin{cases}
   p + (1-p) \cdot P(\tilde{N} = 0) &amp; k = 0 \\
   (1-p) \cdot P(\tilde{N} = k) &amp; k &gt; 0
 \end{cases},\]</span></p>
@@ -625,7 +625,7 @@ $iterations
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb171-1"></a>ZIP.lambda &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">1</span>])</span>
 <span id="cb171-2"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb171-2"></a>ZIP.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>])<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>]))</span>
 <span id="cb171-3"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb171-3"></a><span class="kw">c</span>(<span class="dt">lambda =</span> ZIP.lambda, <span class="dt">p =</span> ZIP.p)</span></code></pre></div>
-<pre><code>lambda      p 
+<pre><code>lambda      p
 0.2527 0.3881 </code></pre>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb173-1"></a>ZIP.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class="op">$</span>minimum</span></code></pre></div>
 <p>Many policyholders file zero claims, which is captured by increasing the probability of observing zero claims by <span class="math inline">\(38.8\%\)</span>.</p>
@@ -633,8 +633,8 @@ $iterations
 <div id="hurdle-poisson" class="section level4">
 <h4><span class="header-section-number">4.3.3.2</span> Hurdle Poisson</h4>
 <p>In the Hurdle Poisson we set the probability of observing zero claims to <span class="math inline">\(p\)</span>. Conditional on there being a claim the distribution follows a zero-truncated Poisson distribution. The probability of observing <span class="math inline">\(k\)</span> claims becomes</p>
-<p><span class="math display">\[P(N = k) = 
-\begin{cases} 
+<p><span class="math display">\[P(N = k) =
+\begin{cases}
   p &amp; k = 0 \\
   (1-p) \cdot P(\tilde{N} = k \mid \tilde{N} &gt; 0) &amp; k &gt; 0
 \end{cases},\]</span></p>
@@ -681,7 +681,7 @@ $iterations
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb179-1"></a>Hurdle.lambda &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">1</span>])</span>
 <span id="cb179-2"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb179-2"></a>Hurdle.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>])<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>]))</span>
 <span id="cb179-3"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb179-3"></a><span class="kw">c</span>(<span class="dt">lambda =</span> Hurdle.lambda, <span class="dt">p =</span> Hurdle.p)</span></code></pre></div>
-<pre><code>lambda      p 
+<pre><code>lambda      p
 0.2513 0.9108 </code></pre>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb181-1"></a>Hurdle.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class="op">$</span>minimum</span></code></pre></div>
 </div>
@@ -697,10 +697,10 @@ Given a set of candidate models for the data, the preferred model is the one wit
 <span id="cb182-3"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb182-3"></a>               <span class="st">&quot;AIC ZIP&quot;</span> =<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span>ZIP.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, </span>
 <span id="cb182-4"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb182-4"></a>               <span class="st">&quot;AIC Hurdle&quot;</span> =<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span>Hurdle.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>))</span>
 <span id="cb182-5"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb182-5"></a>AIC</span></code></pre></div>
-<pre><code>   AIC Poi     AIC NB    AIC ZIP AIC Hurdle 
+<pre><code>   AIC Poi     AIC NB    AIC ZIP AIC Hurdle
     101670     101318     101330     105914 </code></pre>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb184-1"></a>AIC[<span class="kw">which.min</span>(AIC)]</span></code></pre></div>
-<pre><code>AIC NB 
+<pre><code>AIC NB
 101318 </code></pre>
 <p>The lowest AIC value is achieved by the NB distribution, closely followed by the ZIP. The Hurdle distribution attains a remarkably higher AIC value which reflects the poor way in which the exposure is incorporated.</p>
 </div>
@@ -822,14 +822,14 @@ From the last expression we notice that the Hurdle Poisson is overdispersed if <
 <h3><span class="header-section-number">4.6.5</span> Comparison with empirical mean and variance</h3>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb204-1"></a>means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mean Obs&quot;</span> =<span class="st"> </span>mu, <span class="st">&quot;mean Poisson&quot;</span> =<span class="st"> </span>poisson.lambda, <span class="st">&quot;mean NB&quot;</span> =<span class="st"> </span>NB.mean, <span class="st">&quot;mean ZIP&quot;</span> =<span class="st"> </span>ZIP.mean, <span class="st">&quot;mean Hurdle&quot;</span> =<span class="st"> </span>Hurdle.mean)</span>
 <span id="cb204-2"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb204-2"></a>means</span></code></pre></div>
-<pre><code>    mean Obs mean Poisson      mean NB     mean ZIP  mean Hurdle 
+<pre><code>    mean Obs mean Poisson      mean NB     mean ZIP  mean Hurdle
       0.1546       0.1546       0.1546       0.1546       0.1009 </code></pre>
 <p>All distributions expect the hurdle distribution closely approximate the mean of the data.</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb206-1"></a>variances &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;variance Obs&quot;</span> =<span class="st"> </span>var, <span class="st">&quot;variance Poisson&quot;</span> =<span class="st"> </span>poisson.lambda, <span class="st">&quot;variance NB&quot;</span> =<span class="st"> </span>NB.var, <span class="st">&quot;variance ZIP&quot;</span> =<span class="st"> </span>ZIP.var, <span class="st">&quot;variance Hurdle&quot;</span>=Hurdle.var)</span>
 <span id="cb206-2"><a href="putting-it-all-together-case-study-on-modelling-claim-counts.html#cb206-2"></a>variances </span></code></pre></div>
-<pre><code>    variance Obs variance Poisson      variance NB     variance ZIP 
-          0.1675           0.1546           0.1710           0.1698 
- variance Hurdle 
+<pre><code>    variance Obs variance Poisson      variance NB     variance ZIP
+          0.1675           0.1546           0.1710           0.1698
+ variance Hurdle
           0.1160 </code></pre>
 <p>The hurlde distribution also severly underestimates the variance in the data. Since the NB distribution and the ZIP have two parameters they are more flexibility and can capture both the mean and variance well.</p>
 </div>

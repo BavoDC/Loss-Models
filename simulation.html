@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
 <head>
-
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Simulation | Loss Models : a collection of computer labs in R</title>
@@ -10,16 +10,16 @@
 
   <meta property="og:title" content="5 Simulation | Loss Models : a collection of computer labs in R" />
   <meta property="og:type" content="book" />
-  
-  
+
+
   <meta property="og:description" content="Tutorials for the course of Loss Models" />
-  
+
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="5 Simulation | Loss Models : a collection of computer labs in R" />
-  
+
   <meta name="twitter:description" content="Tutorials for the course of Loss Models" />
-  
+
 
 <meta name="author" content="Katrien Antonio, Jonas Crevecoeur and Bavo DC Campo" />
 
@@ -29,8 +29,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
+
+
 <link rel="prev" href="putting-it-all-together-case-study-on-modelling-claim-counts.html"/>
 <link rel="next" href="r-implementation-of-the-assignments-2019-2020.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
     // add button to source code chunks
       $(this).prepend("<div class=\"showopt\">Show Solution</div><br style=\"line-height:22px;\"/>");
- 
+
 	$child = $(this).children('div');
 	$child.each(function(){
 		$(this).children('').attr('class', 'folded');
@@ -286,14 +286,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Given a CDF <span class="math inline">\(F_X\)</span> of a continuous distribution and a uniformly distributed random variable <span class="math inline">\(U\)</span> on <span class="math inline">\([0, 1]\)</span>. Then <span class="math inline">\(F_X\)</span> is the CDF of the random variable <span class="math inline">\(X = F_X^{-1}(U)\)</span>.</p>
 </blockquote>
 <p>We illustrate this with the exponential distribution,
-<span class="math display">\[ 
-F_Y(y) = \begin{cases} 
+<span class="math display">\[
+F_Y(y) = \begin{cases}
 1 - \exp(-\lambda \cdot y) &amp; y \geq 0 \\
 0 &amp; y &lt; 0
 \end{cases}
 \]</span>
 and
-<span class="math display">\[ 
+<span class="math display">\[
 F_Y^{-1}(z) = -\frac{\log(1-z)}{\lambda}, \quad z \in (0, 1).
 \]</span></p>
 <p>We simulate <span class="math inline">\(u\)</span> from a uniform distribution on <span class="math inline">\([0, 1]\)</span>.</p>
@@ -308,7 +308,7 @@ F_Y^{-1}(z) = -\frac{\log(1-z)}{\lambda}, \quad z \in (0, 1).
 <span id="cb209-6"><a href="simulation.html#cb209-6"></a>sim &lt;-<span class="st"> </span><span class="kw">Finverse</span>(u, lambda)</span>
 <span id="cb209-7"><a href="simulation.html#cb209-7"></a></span>
 <span id="cb209-8"><a href="simulation.html#cb209-8"></a><span class="kw">print</span>(<span class="kw">c</span>(<span class="dt">u =</span> u, <span class="dt">sim =</span> sim))</span></code></pre></div>
-<pre><code>     u    sim 
+<pre><code>     u    sim
 0.5858 0.8814 </code></pre>
 <pre><code>Loading required package: latex2exp</code></pre>
 <p><img src="_main_files/figure-html/cdf%20exponential-1.png" width="576" style="display: block; margin: auto;" /></p>
@@ -393,8 +393,8 @@ F_Y^{-1}(z) = -\frac{\log(1-z)}{\lambda}, \quad z \in (0, 1).
 <div id="aggregate-loss" class="section level2">
 <h2><span class="header-section-number">5.2</span> Aggregate loss</h2>
 <p>The number of claims <span class="math inline">\(N\)</span> on an insurance contract is Poisson distributed with mean <span class="math inline">\(2\)</span>. The claim sizes <span class="math inline">\(X\)</span> are independently distributed with CDF</p>
-<p><span class="math display">\[ 
-  F_X(x) = 
+<p><span class="math display">\[
+  F_X(x) =
   \begin{cases}
     0 &amp; x \leq 0 \\
     x^2 &amp; 0 &lt; x \leq 1 \\

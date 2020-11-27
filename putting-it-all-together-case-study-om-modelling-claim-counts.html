@@ -2,7 +2,7 @@
 <html >
 
 <head>
-
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Loss Models : a collection of computer labs in R</title>
@@ -11,16 +11,16 @@
 
   <meta property="og:title" content="Loss Models : a collection of computer labs in R" />
   <meta property="og:type" content="book" />
-  
-  
+
+
   <meta property="og:description" content="Tutorials for the course of Loss Models" />
-  
+
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Loss Models : a collection of computer labs in R" />
-  
+
   <meta name="twitter:description" content="Tutorials for the course of Loss Models" />
-  
+
 
 <meta name="author" content="Katrien Antonio and Jonas Crevecoeur">
 
@@ -30,8 +30,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  
-  
+
+
 <link rel="prev" href="simple-parametric-distributions-for-frequency-and-severity-data.html">
 <link rel="next" href="simulation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -56,7 +56,7 @@ $(document).ready(function() {
 
     // add button to source code chunks
       $(this).prepend("<div class=\"showopt\">Show Solution</div><br style=\"line-height:22px;\"/>");
- 
+
 	$child = $(this).children('div');
 	$child.each(function(){
 		$(this).children('').attr('class', 'folded');
@@ -306,19 +306,19 @@ var &lt;-<span class="st"> </span><span class="kw">sum</span>((Clm_Count <span c
 
 <span class="kw">c</span>(<span class="dt">mean =</span> mu,
   <span class="dt">variance =</span> var)</code></pre></div>
-<pre><code>##       mean   variance 
+<pre><code>##       mean   variance
 ## 0.09848262 0.10925308</code></pre>
 </div>
 <div id="summary-statistics-taking-into-account-exposure" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Summary statistics taking into account exposure</h3>
 <p>The previous calculation of the mean and variance does not consider the difference in exposure between policyholders. However, it is important to take exposure into account. Let <span class="math inline">\(d_i\)</span> be the exposure for policyholder <span class="math inline">\(i\)</span>, then we calculate the mean as</p>
 <p><span class="math display">\[ \mu_{\text{exp}} = \sum_{i=1}^m  \frac{d_i}{\sum_{i=1}^m d_i} \frac{n_i}{d_i} =   \frac{\sum_{i=1}^m n_i}{\sum_{i=1}^m d_i}\]</span> and the variance as <span class="math display">\[ \sigma^2_{\text{exp}}=\frac{\sum_{i=1}^m(n_i-\mu_{exp} \cdot d_i)^2}{\sum_{i=1}^m d_i} . \]</span> For more intuition behind these estimators, check out the <a href="http://freakonometrics.hypotheses.org/2732">blog of Arthur Charpentier</a> and Section 15.6.6 from Klugman et al..</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="kw">sum</span>(Clm_Count) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(TLength); 
-var &lt;-<span class="st"> </span><span class="kw">sum</span>((Clm_Count<span class="op">-</span>mu<span class="op">*</span>TLength)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>(TLength) 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="kw">sum</span>(Clm_Count) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(TLength);
+var &lt;-<span class="st"> </span><span class="kw">sum</span>((Clm_Count<span class="op">-</span>mu<span class="op">*</span>TLength)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">sum</span>(TLength)
 
 <span class="kw">c</span>(<span class="dt">mean =</span> mu,
   <span class="dt">variance =</span> var)</code></pre></div>
-<pre><code>##      mean  variance 
+<pre><code>##      mean  variance
 ## 0.1545612 0.1675359</code></pre>
 <p>This is the expected number of accidents for a policyholder who is insurerd throughout the whole year, i.e. <span class="math inline">\(d_i = 1\)</span>.</p>
 </div>
@@ -327,7 +327,7 @@ var &lt;-<span class="st"> </span><span class="kw">sum</span>((Clm_Count<span cl
 <p><code>table</code> allows us to easily construct a contingency table of the counts.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(Clm_Count)</code></pre></div>
 <pre><code>## Clm_Count
-##      0      1      2      3      4      5 
+##      0      1      2      3      4      5
 ## 145683  12910   1234    107     12      1</code></pre>
 <p>R can plot this table</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">table</span>(Clm_Count))</code></pre></div>
@@ -335,9 +335,9 @@ var &lt;-<span class="st"> </span><span class="kw">sum</span>((Clm_Count<span cl
 <p><code>prop.table</code> can be used to obtain the empirical probability distribution</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(<span class="kw">table</span>(Clm_Count))</code></pre></div>
 <pre><code>## Clm_Count
-##            0            1            2            3            4 
-## 9.108205e-01 8.071424e-02 7.715056e-03 6.689716e-04 7.502485e-05 
-##            5 
+##            0            1            2            3            4
+## 9.108205e-01 8.071424e-02 7.715056e-03 6.689716e-04 7.502485e-05
+##            5
 ## 6.252071e-06</code></pre>
 <p>We can create a better barplot using ggplot</p>
 <ul>
@@ -420,7 +420,7 @@ lhs &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poisson.loglikelihood &lt;-<span class="st"> </span><span class="cf">function</span>(lambda)
 {
   loglikelihood &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="op">-</span>lambda <span class="op">*</span><span class="st"> </span>TLength <span class="op">+</span><span class="st"> </span>Clm_Count <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(lambda <span class="op">*</span><span class="st"> </span>TLength) <span class="op">-</span><span class="st"> </span><span class="kw">lfactorial</span>(Clm_Count))
-  
+
   <span class="kw">return</span>(loglikelihood)
 }</code></pre></div>
 <p>Unfortunately it is not possible to maximize this function directly in R. We make two small adjustments</p>
@@ -431,7 +431,7 @@ lhs &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poisson.negLoglikelihood &lt;-<span class="st"> </span><span class="cf">function</span>(beta)
 {
   lambda =<span class="st"> </span><span class="kw">exp</span>(beta)
-  
+
   <span class="kw">return</span>(<span class="op">-</span><span class="kw">poisson.loglikelihood</span>(lambda))
 }</code></pre></div>
 <p>We use the non-linear minimization function <code>nlm</code> to carry out the minimization. This routine requires a starting value for <span class="math inline">\(\beta\)</span>, which is here simply set to 0. The function returns a list containing the following output (check the help page ?nlm for more details):</p>
@@ -448,20 +448,20 @@ lhs &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit</code></pre></div>
 <pre><code>## $minimum
 ## [1] 50834.16
-## 
+##
 ## $estimate
 ## [1] -1.867166
-## 
+##
 ## $gradient
 ## [1] 0.0003585049
-## 
+##
 ## $hessian
 ##          [,1]
 ## [1,] 15753.56
-## 
+##
 ## $code
 ## [1] 1
-## 
+##
 ## $iterations
 ## [1] 7</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Store the fitted lambda value</span>
@@ -494,15 +494,15 @@ poisson.se =<span class="st"> </span>poisson.lambda<span class="op">^</span><spa
 {
   mu &lt;-<span class="st"> </span><span class="kw">exp</span>(beta[<span class="dv">1</span>])
   a &lt;-<span class="st"> </span><span class="kw">exp</span>(beta[<span class="dv">2</span>])
-  
+
   loglikelihood &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">lgamma</span>(a <span class="op">+</span><span class="st"> </span>Clm_Count) <span class="op">-</span><span class="st"> </span><span class="kw">lgamma</span>(a) <span class="op">-</span><span class="st"> </span><span class="kw">lfactorial</span>(Clm_Count) <span class="op">+</span><span class="st"> </span>Clm_Count <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(mu<span class="op">*</span>TLength<span class="op">/</span>(mu<span class="op">*</span>TLength <span class="op">+</span><span class="st"> </span>a)) <span class="op">+</span><span class="st"> </span>a <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(a <span class="op">/</span><span class="st"> </span>(mu <span class="op">*</span><span class="st"> </span>TLength <span class="op">+</span><span class="st"> </span>a)))
-  
+
   <span class="kw">return</span>(<span class="op">-</span>loglikelihood)
 }</code></pre></div>
 <p>In this case it’s more important to supply good starting values for the convergence speed of the algorithm. For the Negative Binomial distribution <span class="math display">\[ E(X) = \mu \quad \text{and} \quad Var(X) = \mu + \frac{1}{a} \cdot \mu^2.\]</span> We match the first two moments and set</p>
 <p><span class="math display">\[ \mu = E(X) \quad \text{and} \quad a = \frac{\mu^2}{Var(X) - \mu}.\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu.initial &lt;-<span class="st"> </span>mu
-a.initial &lt;-<span class="st"> </span>mu<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(var <span class="op">-</span><span class="st"> </span>mu) 
+a.initial &lt;-<span class="st"> </span>mu<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(var <span class="op">-</span><span class="st"> </span>mu)
 
 fit &lt;-<span class="st"> </span><span class="kw">nlm</span>(NB.negativeLoglikelihood, <span class="kw">log</span>(<span class="kw">c</span>(mu.initial, a.initial)),<span class="dt">hessian=</span><span class="ot">TRUE</span>)
 
@@ -519,8 +519,8 @@ nb.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class=
 <div id="zero-inflated-poisson-zip" class="section level4">
 <h4><span class="header-section-number">3.3.3.1</span> Zero Inflated Poisson (ZIP)</h4>
 <p>The ZIP distribution is a Poisson distribution where the probability of having zero claims is increased by <span class="math inline">\(p\)</span>.</p>
-<p><span class="math display">\[ P(N = k) = 
-\begin{cases} 
+<p><span class="math display">\[ P(N = k) =
+\begin{cases}
   p + (1-p) \cdot P(\tilde{N} = 0) &amp; k = 0 \\
   (1-p) \cdot P(\tilde{N} = k) &amp; k &gt; 0
 \end{cases},\]</span></p>
@@ -533,11 +533,11 @@ nb.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class=
 {
   lambda &lt;-<span class="st"> </span><span class="kw">exp</span>(beta[<span class="dv">1</span>])
   p &lt;-<span class="st"> </span><span class="kw">exp</span>(beta[<span class="dv">2</span>])<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(beta[<span class="dv">2</span>]))
-  
-  density &lt;-<span class="st"> </span>(p <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>TLength <span class="op">*</span><span class="st"> </span>lambda))<span class="op">^</span>(Clm_Count <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">*</span><span class="st"> </span>((<span class="dv">1</span><span class="op">-</span>p) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>TLength <span class="op">*</span><span class="st"> </span>lambda) <span class="op">*</span><span class="st"> </span>(TLength <span class="op">*</span>lambda)<span class="op">^</span>Clm_Count <span class="op">/</span><span class="st"> </span><span class="kw">gamma</span>(Clm_Count<span class="op">+</span><span class="dv">1</span>))<span class="op">^</span>(Clm_Count <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) 
-  
+
+  density &lt;-<span class="st"> </span>(p <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>TLength <span class="op">*</span><span class="st"> </span>lambda))<span class="op">^</span>(Clm_Count <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">*</span><span class="st"> </span>((<span class="dv">1</span><span class="op">-</span>p) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>TLength <span class="op">*</span><span class="st"> </span>lambda) <span class="op">*</span><span class="st"> </span>(TLength <span class="op">*</span>lambda)<span class="op">^</span>Clm_Count <span class="op">/</span><span class="st"> </span><span class="kw">gamma</span>(Clm_Count<span class="op">+</span><span class="dv">1</span>))<span class="op">^</span>(Clm_Count <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)
+
   loglikelihood &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">log</span>(density))
-  
+
   <span class="kw">return</span>(<span class="op">-</span>loglikelihood)
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">nlm</span>(ZIP.negativeLoglikelihood, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),<span class="dt">hessian=</span><span class="ot">TRUE</span>)</code></pre></div>
@@ -549,27 +549,27 @@ nb.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit</code></pre></div>
 <pre><code>## $minimum
 ## [1] 50663.24
-## 
+##
 ## $estimate
 ## [1] -1.3754366 -0.4551083
-## 
+##
 ## $gradient
 ## [1] -0.02995685  0.02011802
-## 
+##
 ## $hessian
 ##           [,1]      [,2]
 ## [1,] 14606.513 -5622.753
 ## [2,] -5622.753  2422.831
-## 
+##
 ## $code
 ## [1] 1
-## 
+##
 ## $iterations
 ## [1] 13</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ZIP.lambda &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">1</span>])
 ZIP.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>])<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>]))
 <span class="kw">c</span>(<span class="dt">lambda =</span> ZIP.lambda, <span class="dt">p =</span> ZIP.p)</code></pre></div>
-<pre><code>##    lambda         p 
+<pre><code>##    lambda         p
 ## 0.2527292 0.3881469</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ZIP.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class="op">$</span>minimum</code></pre></div>
 <p>Many policyholders file zero claims, which is captured by increasing the probability of observing zero claims by <span class="math inline">\(38.8\%\)</span>.</p>
@@ -577,8 +577,8 @@ ZIP.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="
 <div id="hurdle-poisson" class="section level4">
 <h4><span class="header-section-number">3.3.3.2</span> Hurdle Poisson</h4>
 <p>In the Hurdle Poisson we set the probability of observing zero claims to <span class="math inline">\(p\)</span>. Conditional on there being a claim the distribution follows a zero-truncated Poisson distribution. The probability of observing <span class="math inline">\(k\)</span> claims becomes</p>
-<p><span class="math display">\[P(N = k) = 
-\begin{cases} 
+<p><span class="math display">\[P(N = k) =
+\begin{cases}
   p &amp; k = 0 \\
   (1-p) \cdot P(\tilde{N} = k \mid \tilde{N} &gt; 0) &amp; k &gt; 0
 \end{cases},\]</span></p>
@@ -589,11 +589,11 @@ ZIP.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="
 {
   lambda &lt;-<span class="st"> </span><span class="kw">exp</span>(beta[<span class="dv">1</span>])
   p &lt;-<span class="st"> </span><span class="kw">exp</span>(beta[<span class="dv">2</span>])<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(beta[<span class="dv">2</span>]))
-  
-  density &lt;-<span class="st"> </span>(p)<span class="op">^</span>(Clm_Count <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">*</span><span class="st"> </span>((<span class="dv">1</span><span class="op">-</span>p) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>TLength <span class="op">*</span><span class="st"> </span>lambda) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>lambda <span class="op">*</span><span class="st"> </span>TLength)) <span class="op">*</span><span class="st"> </span>(TLength <span class="op">*</span>lambda)<span class="op">^</span>Clm_Count <span class="op">/</span><span class="st"> </span><span class="kw">gamma</span>(Clm_Count<span class="op">+</span><span class="dv">1</span>))<span class="op">^</span>(Clm_Count <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) 
-  
+
+  density &lt;-<span class="st"> </span>(p)<span class="op">^</span>(Clm_Count <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">*</span><span class="st"> </span>((<span class="dv">1</span><span class="op">-</span>p) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>TLength <span class="op">*</span><span class="st"> </span>lambda) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span><span class="kw">exp</span>(<span class="op">-</span>lambda <span class="op">*</span><span class="st"> </span>TLength)) <span class="op">*</span><span class="st"> </span>(TLength <span class="op">*</span>lambda)<span class="op">^</span>Clm_Count <span class="op">/</span><span class="st"> </span><span class="kw">gamma</span>(Clm_Count<span class="op">+</span><span class="dv">1</span>))<span class="op">^</span>(Clm_Count <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)
+
   loglikelihood &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">log</span>(density))
-  
+
   <span class="kw">return</span>(<span class="op">-</span>loglikelihood)
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">nlm</span>(Hurdle.negativeLoglikelihood, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),<span class="dt">hessian=</span><span class="ot">TRUE</span>)</code></pre></div>
@@ -605,27 +605,27 @@ ZIP.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit</code></pre></div>
 <pre><code>## $minimum
 ## [1] 52955.24
-## 
+##
 ## $estimate
 ## [1] -1.381171  2.323694
-## 
+##
 ## $gradient
 ## [1] 4.741167e-05 1.087780e-02
-## 
+##
 ## $hessian
 ##               [,1]          [,2]
 ## [1,]  1.540939e+03 -3.131203e-04
 ## [2,] -3.131203e-04  1.298946e+04
-## 
+##
 ## $code
 ## [1] 1
-## 
+##
 ## $iterations
 ## [1] 12</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Hurdle.lambda &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">1</span>])
 Hurdle.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>])<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(fit<span class="op">$</span>estimate[<span class="dv">2</span>]))
 <span class="kw">c</span>(<span class="dt">lambda =</span> Hurdle.lambda, <span class="dt">p =</span> Hurdle.p)</code></pre></div>
-<pre><code>##    lambda         p 
+<pre><code>##    lambda         p
 ## 0.2512842 0.9108204</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Hurdle.loglik &lt;-<span class="st"> </span><span class="op">-</span>fit<span class="op">$</span>minimum</code></pre></div>
 </div>
@@ -635,15 +635,15 @@ Hurdle.p &lt;-<span class="st"> </span><span class="kw">exp</span>(fit<span clas
 <h2><span class="header-section-number">3.4</span> AIC</h2>
 <p>Suppose that we have a statistical model of some data. Let k be the number of estimated parameters in the model. Let <span class="math inline">\({\displaystyle {\hat {L}}}\)</span> be the maximum value of the likelihood function for the model. Then the AIC value of the model is the following</p>
 <p><span class="math display">\[ \text{AIC} = 2 k - 2 \ln ( \hat{\mathcal{L}}) \]</span> Given a set of candidate models for the data, the preferred model is the one with the minimum AIC value. Thus, AIC rewards goodness of fit (as assessed by the likelihood function), but it also includes a penalty that is an increasing function of the number of estimated parameters. The penalty discourages overfitting, because increasing the number of parameters in the model almost always improves the goodness of the fit. For more information see <a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">wikipedia</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AIC &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">c</span>(<span class="st">&quot;AIC Poi&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>poisson.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span>, 
-               <span class="st">&quot;AIC NB&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>nb.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, 
-               <span class="st">&quot;AIC ZIP&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>ZIP.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AIC &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">c</span>(<span class="st">&quot;AIC Poi&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>poisson.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">1</span>,
+               <span class="st">&quot;AIC NB&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>nb.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>,
+               <span class="st">&quot;AIC ZIP&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>ZIP.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>,
                <span class="st">&quot;AIC Hurdle&quot;</span> =<span class="st"> </span><span class="op">-</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>Hurdle.loglik <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>))
 AIC</code></pre></div>
-<pre><code>##    AIC Poi     AIC NB    AIC ZIP AIC Hurdle 
+<pre><code>##    AIC Poi     AIC NB    AIC ZIP AIC Hurdle
 ##     101670     101318     101330     105914</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AIC[<span class="kw">which.min</span>(AIC)]</code></pre></div>
-<pre><code>## AIC NB 
+<pre><code>## AIC NB
 ## 101318</code></pre>
 <p>The lowest AIC value is achieved by the NB distribution, closely followed by the ZIP. The Hurdle distribution attains a remarkably higher AIC value which reflects the poor way in which the exposure is incorporated.</p>
 </div>
@@ -754,14 +754,14 @@ Hurdle.var</code></pre></div>
 <h3><span class="header-section-number">3.6.5</span> Comparison with empirical mean and variance</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">means &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mean Obs&quot;</span> =<span class="st"> </span>mu, <span class="st">&quot;mean Poisson&quot;</span> =<span class="st"> </span>poisson.lambda, <span class="st">&quot;mean NB&quot;</span> =<span class="st"> </span>NB.mean, <span class="st">&quot;mean ZIP&quot;</span> =<span class="st"> </span>ZIP.mean, <span class="st">&quot;mean Hurdle&quot;</span> =<span class="st"> </span>Hurdle.mean)
 means</code></pre></div>
-<pre><code>##     mean Obs mean Poisson      mean NB     mean ZIP  mean Hurdle 
+<pre><code>##     mean Obs mean Poisson      mean NB     mean ZIP  mean Hurdle
 ##    0.1545612    0.1545611    0.1546480    0.1546332    0.1008530</code></pre>
 <p>All distributions expect the hurdle distribution closely approximate the mean of the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">variances &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;variance Obs&quot;</span> =<span class="st"> </span>var, <span class="st">&quot;variance Poisson&quot;</span> =<span class="st"> </span>poisson.lambda, <span class="st">&quot;variance NB&quot;</span> =<span class="st"> </span>NB.var, <span class="st">&quot;variance ZIP&quot;</span> =<span class="st"> </span>ZIP.var, <span class="st">&quot;variance Hurdle&quot;</span>=Hurdle.var)
 variances </code></pre></div>
-<pre><code>##     variance Obs variance Poisson      variance NB     variance ZIP 
-##        0.1675359        0.1545611        0.1709641        0.1698021 
-##  variance Hurdle 
+<pre><code>##     variance Obs variance Poisson      variance NB     variance ZIP
+##        0.1675359        0.1545611        0.1709641        0.1698021
+##  variance Hurdle
 ##        0.1160245</code></pre>
 <p>The hurlde distribution also severly underestimates the variance in the data. Since the NB distribution and the ZIP have two parameters they are more flexibility and can capture both the mean and variance well.</p>
 </div>
